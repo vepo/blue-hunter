@@ -1,3 +1,31 @@
-<p>
-  search-by-name works!
-</p>
+<form name="form" class="form-inline justify-content-center my-2 my-lg-0" (ngSubmit)="search()" novalidate>
+  <input class="form-control mr-sm-2" name="term" [(ngModel)]="term" type="text" placeholder="Search" required>
+  <button class="btn btn-outline-success my-2 my-sm-0" [disabled]="loading" type="submit">Search</button>
+</form>
+<div class="row justify-content-md-center" *ngIf="loading">
+  <div class="col-4 text-center my-5">
+    <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+    />
+  </div>
+</div>
+<div class="row justify-content-md-center" *ngIf="!loading && clients.length == 0">
+  <div class="col-4 text-center my-5">
+    No client found for "{{lastSearchTerm}}". Try a better saerch term.
+  </div>
+</div>
+<div class="row">
+  <div *ngFor="let client of clients" class="col-sm-6 py-2">
+    <div class="card">
+      <div class="card-header">
+        {{client.fullName}}
+      </div>
+      <div class="card-block">
+        <p class="card-text">{{ client.username }}</p>
+        <p class="card-text">{{ client.gender }}</p>
+        <p class="card-text">{{ client.age }}</p>
+        <p class="card-text">{{ client.email }}</p>
+        <p class="card-text">{{ client.phone }}</p>
+      </div>
+    </div>
+  </div>
+</div>
