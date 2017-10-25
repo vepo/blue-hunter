@@ -1,0 +1,30 @@
+version: "2"
+
+services:
+  bluehunter-db:
+    image: postgres
+    container_name: bluehunter-db
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_DB=bluehunter
+      - POSTGRES_USER=bluehunter-user
+      - POSTGRES_PASSWORD=bluehunter-pw
+    volumes:
+      - ./env-config/postgres.conf:/etc/postgresql.conf
+      - /srv/docker/postgresql:/var/lib/postgresql
+    command: postgres -c config_file=/etc/postgresql.conf
+    restart: always
+
+  bluehunter-db-migrator:
+    image: vepo/flyway-migrator
+    depends_on:
+      - bluehunter-db
+    environment:
+      - DB_URL=postgresql://bluehunter-db/bluehunter
+      - DB_USER=bluehunter-user
+      - DB_PASSWORD=bluehunter-pw
+    volumes:
+      - ./migration-sql:/flyway/sql
